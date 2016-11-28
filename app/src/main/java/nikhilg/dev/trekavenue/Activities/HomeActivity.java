@@ -1,7 +1,9 @@
-package nikhilg.dev.trekavenue;
+package nikhilg.dev.trekavenue.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import nikhilg.dev.trekavenue.R;
 
 public class HomeActivity extends AppCompatActivity {
 
