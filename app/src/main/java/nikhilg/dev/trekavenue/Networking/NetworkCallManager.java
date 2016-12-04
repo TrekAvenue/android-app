@@ -2,7 +2,6 @@ package nikhilg.dev.trekavenue.Networking;
 
 import android.content.Context;
 import android.provider.Settings;
-import android.support.v4.util.ArrayMap;
 import android.util.Log;
 
 import com.android.volley.DefaultRetryPolicy;
@@ -12,10 +11,8 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 
 import nikhilg.dev.trekavenue.Interfaces.NetworkRequestCallback;
