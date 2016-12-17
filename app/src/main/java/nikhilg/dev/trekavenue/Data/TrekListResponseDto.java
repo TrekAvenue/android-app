@@ -12,6 +12,9 @@ public class TrekListResponseDto extends BaseDto {
     private Integer status;
     private Long nextTrekId;
 
+    // Remove below variables when becomes camelCase
+    private ArrayList<TrekDataDto> trek_data;
+
     public Integer getFlag() {
         return flag;
     }
@@ -50,5 +53,13 @@ public class TrekListResponseDto extends BaseDto {
 
     public void setNextTrekId(Long nextTrekId) {
         this.nextTrekId = nextTrekId;
+    }
+
+    public ArrayList<TrekDataDto> getTrek_data() {
+        return trek_data;
+    }
+
+    public void setTrek_data(ArrayList<TrekDataDto> trek_data) {
+        this.trek_data = trek_data;
     }
 }

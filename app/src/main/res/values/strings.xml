@@ -1,2 +1,5 @@
 <resources>
+    <string name="trek_avenue">Trek Avenue</string>
+    <string name="splash_logo">Your personal trekking\npartner</string>
+    <string name="loading">Loading...</string>
 </resources>
