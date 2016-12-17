@@ -5,6 +5,8 @@ import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,19 +18,22 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
+import nikhilg.dev.trekavenue.Adapters.ImagesAdapter;
 import nikhilg.dev.trekavenue.Data.ImageDto;
 import nikhilg.dev.trekavenue.Data.TrekDataDto;
+import nikhilg.dev.trekavenue.Interfaces.RandomCallback;
 import nikhilg.dev.trekavenue.R;
 import nikhilg.dev.trekavenue.Utils.Constants;
 import nikhilg.dev.trekavenue.Utils.IconView;
 
-public class TrekDetailActivity extends AppCompatActivity {
+public class TrekDetailActivity extends AppCompatActivity implements RandomCallback {
 
     // layout items
     private CollapsingToolbarLayout collapsingToolbar;
     private FrameLayout topImageContainer;
     private ImageView imageView;
-    private TextView trekName, trekName2;
+    private RecyclerView imagesRecyclerView;
+    private ImagesAdapter mImagesAdapter;
 
     private int width, height;
 
@@ -37,7 +42,7 @@ public class TrekDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_trek_detail_new);
+        setContentView(R.layout.activity_trek_detail);
 
         width = getWindowManager().getDefaultDisplay().getWidth();
         height = width*2/3;
@@ -64,16 +69,12 @@ public class TrekDetailActivity extends AppCompatActivity {
 
     private void initLayout() {
         topImageContainer = (FrameLayout) findViewById(R.id.topImageContainer);
-        topImageContainer.setLayoutParams(new CollapsingToolbarLayout.LayoutParams(width, height));
+        topImageContainer.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         imageView = (ImageView) findViewById(R.id.imageView);
 
         for (ImageDto temp : trekObject.getImages()) {
             if (temp.getIndex() == 0) {
-                Picasso.with(this)
-                        .load(temp.getUrl())
-                        .placeholder(R.drawable.placeholder)
-                        .error(R.drawable.placeholder)
-                        .into(imageView);
+                loadImage(temp.getUrl());
                 break;
             }
         }
@@ -85,7 +86,10 @@ public class TrekDetailActivity extends AppCompatActivity {
         collapsingToolbar.setExpandedTitleTypeface(tf);
         collapsingToolbar.setTitle(trekObject.getName());
 
-
+        imagesRecyclerView = (RecyclerView) findViewById(R.id.imagesRecyclerView);
+        mImagesAdapter = new ImagesAdapter(trekObject.getImages(), this, this, 0);
+        imagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+        imagesRecyclerView.setAdapter(mImagesAdapter);
     }
 
     @Override
@@ -101,5 +105,19 @@ public class TrekDetailActivity extends AppCompatActivity {
 
     private void setOnClickListener() {
 
+    }
+
+    @Override
+    public void randomeMethod(Object[] data) {
+        String url = (String) data[0];
+        loadImage(url);
+    }
+
+    private void loadImage(String url) {
+        Picasso.with(this)
+                .load(url)
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.placeholder)
+                .into(imageView);
     }
 }
