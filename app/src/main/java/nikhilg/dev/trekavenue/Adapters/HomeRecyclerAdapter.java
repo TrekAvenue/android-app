@@ -118,8 +118,8 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (temp.getIndex() == 0) {
                     Picasso.with(mContext)
                             .load(temp.getUrl())
-                            .placeholder(R.drawable.placeholder)
-                            .error(R.drawable.placeholder)
+                            .placeholder(R.drawable.placeholder_5_2)
+                            .error(R.drawable.placeholder_5_2)
                             .into(vh.imageView);
                     break;
                 }

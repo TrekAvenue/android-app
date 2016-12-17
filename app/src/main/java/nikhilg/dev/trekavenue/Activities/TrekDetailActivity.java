@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -29,14 +30,23 @@ import nikhilg.dev.trekavenue.Utils.IconView;
 public class TrekDetailActivity extends AppCompatActivity implements RandomCallback {
 
     // layout items
+
+    // top images and toolbar items
     private CollapsingToolbarLayout collapsingToolbar;
     private FrameLayout topImageContainer;
     private ImageView imageView;
     private RecyclerView imagesRecyclerView;
-    private ImagesAdapter mImagesAdapter;
 
+    // location and difficulty items
+    private TextView locationText, difficultyText;
+    private IconView difficultyIcon;
+    private LinearLayout locationLayout, difficultyLayout;
+
+    // top images and toolbar helper items
+    private ImagesAdapter mImagesAdapter;
     private int width, height;
 
+    // data variables
     private TrekDataDto trekObject;
 
     @Override
@@ -68,6 +78,7 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     }
 
     private void initLayout() {
+        // Setup top images and toolbar items and recyclerview
         topImageContainer = (FrameLayout) findViewById(R.id.topImageContainer);
         topImageContainer.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -90,6 +101,32 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
         mImagesAdapter = new ImagesAdapter(trekObject.getImages(), this, this, 0);
         imagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
         imagesRecyclerView.setAdapter(mImagesAdapter);
+
+        // setup location and difficulty items
+        locationText = (TextView) findViewById(R.id.locationText);
+        difficultyText = (TextView) findViewById(R.id.difficultyText);
+        difficultyIcon = (IconView) findViewById(R.id.difficultyIcon);
+        locationLayout = (LinearLayout) findViewById(R.id.locationLayout);
+        difficultyLayout = (LinearLayout) findViewById(R.id.difficultLayout);
+
+        if (!TextUtils.isEmpty(trekObject.getRegion())) {
+            locationText.setText(trekObject.getRegion());
+        } else {
+            locationLayout.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(trekObject.getDifficulty())) {
+            difficultyText.setText(trekObject.getDifficulty());
+            if (trekObject.getDifficulty().equalsIgnoreCase("difficult")) {
+                difficultyIcon.setTextColor(getResources().getColor(R.color.red));
+            } else if (trekObject.getDifficulty().equalsIgnoreCase("easy")) {
+                difficultyIcon.setTextColor(getResources().getColor(R.color.green));
+            } else {
+                difficultyIcon.setTextColor(getResources().getColor(R.color.orange));
+            }
+        } else {
+            difficultyLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -116,8 +153,8 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     private void loadImage(String url) {
         Picasso.with(this)
                 .load(url)
-                .placeholder(R.drawable.placeholder)
-                .error(R.drawable.placeholder)
+                .placeholder(R.drawable.placeholder_5_2)
+                .error(R.drawable.placeholder_5_2)
                 .into(imageView);
     }
 }

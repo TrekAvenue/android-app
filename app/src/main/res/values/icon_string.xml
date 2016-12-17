@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="back_icon">&#xe900;</string>
+    <string name="difficulty_icon">&#xe901;</string>
+    <string name="location_icon">&#xe902;</string>
 </resources>

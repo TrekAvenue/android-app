@@ -117,7 +117,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             if (imageURLList.get(position).getIndex() == selectedIndex) {
                 vh.frameLayout.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
             } else {
-                vh.frameLayout.setBackgroundColor(mContext.getResources().getColor(R.color.text_light_gray));
+                vh.frameLayout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light_color));
             }
 
             vh.frameLayout.setTag(position);
