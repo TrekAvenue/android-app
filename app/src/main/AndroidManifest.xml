@@ -14,8 +14,10 @@
 
         <!-- Acctivities -->
 
+
         <!-- Splash Activity -->
-        <activity android:name=".Activities.SplashActivity"
+        <activity
+            android:name=".Activities.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme">
             <intent-filter>
@@ -26,9 +28,10 @@
         </activity>
 
         <!-- Home Activity -->
-        <activity android:name=".Activities.HomeActivity"
-            android:screenOrientation="portrait"/>
-
+        <activity
+            android:name=".Activities.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.TrekDetailActivity"></activity>
     </application>
 
 </manifest>

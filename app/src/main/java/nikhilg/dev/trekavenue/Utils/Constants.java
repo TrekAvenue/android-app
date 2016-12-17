@@ -5,4 +5,6 @@ package nikhilg.dev.trekavenue.Utils;
  */
 public interface Constants {
     public static final int NETWORK_CALL_SUCCESS_CODE = 101;
+
+    public static final String TREK_OBJECT = "trekObject";
 }

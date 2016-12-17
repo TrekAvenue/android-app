@@ -1,6 +1,10 @@
 package nikhilg.dev.trekavenue.Adapters;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,15 +17,18 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import nikhilg.dev.trekavenue.Activities.TrekDetailActivity;
 import nikhilg.dev.trekavenue.Data.ImageDto;
 import nikhilg.dev.trekavenue.Data.TrekDataDto;
 import nikhilg.dev.trekavenue.Interfaces.OnLoadMoreListener;
 import nikhilg.dev.trekavenue.R;
+import nikhilg.dev.trekavenue.Utils.Constants;
 
 /**
  * Created by nik on 17/12/16.
@@ -132,6 +139,15 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public void onClick(View v) {
+        int pos = (Integer) v.getTag();
+        Intent intent = new Intent(mContext, TrekDetailActivity.class);
+        intent.putExtra(Constants.TREK_OBJECT, new Gson().toJson(trekList.get(pos)));
+
+        Pair<View, String> p1 = Pair.create((View) v.findViewById(R.id.imageView), "listImageTransition");
+        Pair<View, String> p2 = Pair.create((View) v.findViewById(R.id.trekName), "trekNameTransition");
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(mContext, p1, p2);
+        ActivityCompat.startActivity(mContext, intent, options.toBundle());
 
     }
 
