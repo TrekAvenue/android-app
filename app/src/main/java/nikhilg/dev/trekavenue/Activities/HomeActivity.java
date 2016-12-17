@@ -7,7 +7,9 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -31,6 +33,10 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView recyclerView;
     private LinearLayout progressBarLayout;
+
+    // toolbar items
+    private ImageView titleImageView;
+    private TextView titleText;
 
     // data variables
     private TrekListResponseDto trekListResponseDto;
@@ -77,6 +83,9 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     }
 
     private void initLayout() {
+        titleImageView = (ImageView) findViewById(R.id.titleImageView);
+        titleText = (TextView) findViewById(R.id.titleText);
+
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         progressBarLayout = (LinearLayout) findViewById(R.id.progressBarLayout);
