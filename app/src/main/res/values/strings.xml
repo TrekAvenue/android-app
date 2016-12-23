@@ -4,4 +4,5 @@
     <string name="loading">Loading...</string>
     <string name="view_all">View\\nAll</string>
     <string name="detail_placeholder_text">Details</string>
+    <string name="providers_placeholder_text">Providers</string>
 </resources>
