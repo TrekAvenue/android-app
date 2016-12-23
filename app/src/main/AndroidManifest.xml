@@ -30,8 +30,13 @@
         <!-- Home Activity -->
         <activity
             android:name=".Activities.HomeActivity"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Activities.TrekDetailActivity"></activity>
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"/>
+
+        <!-- Trek Detail Activity -->
+        <activity android:name=".Activities.TrekDetailActivity"
+            android:theme="@style/TransparentStatusBarTheme"/>
+
     </application>
 
 </manifest>

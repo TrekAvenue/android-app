@@ -9,4 +9,11 @@
         <item name="android:windowContentTransitions">true</item>
     </style>
 
+    <style name="TransparentStatusBarTheme" parent="AppTheme">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@color/black</item>
+
+        <!--<item name="android:windowBackground">@drawable/splash_drawable_background</item>-->
+    </style>
+
 </resources>

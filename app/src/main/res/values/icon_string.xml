@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="back_icon">&#xe900;</string>
-    <string name="difficulty_icon">&#xe901;</string>
+    <string name="hiker_icon">&#xe901;</string>
     <string name="location_icon">&#xe902;</string>
+    <string name="sunny_icon">&#xe903;</string>
+    <string name="duration_icon">&#xe904;</string>
+    <string name="altitude_icon">&#xe905;</string>
 </resources>

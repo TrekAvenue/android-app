@@ -38,9 +38,8 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     private RecyclerView imagesRecyclerView;
 
     // location and difficulty items
-    private TextView locationText, difficultyText;
-    private IconView difficultyIcon;
-    private LinearLayout locationLayout, difficultyLayout;
+    private TextView locationText, difficultyText, altitudeText, temperatureText;
+    private LinearLayout locationLayout, difficultyLayout, altitudeLayout, temperatureLayout;
 
     // top images and toolbar helper items
     private ImagesAdapter mImagesAdapter;
@@ -105,9 +104,12 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
         // setup location and difficulty items
         locationText = (TextView) findViewById(R.id.locationText);
         difficultyText = (TextView) findViewById(R.id.difficultyText);
-        difficultyIcon = (IconView) findViewById(R.id.difficultyIcon);
+        altitudeText = (TextView) findViewById(R.id.altitudeText);
+        temperatureText = (TextView) findViewById(R.id.temperatureText);
         locationLayout = (LinearLayout) findViewById(R.id.locationLayout);
         difficultyLayout = (LinearLayout) findViewById(R.id.difficultLayout);
+        altitudeLayout = (LinearLayout) findViewById(R.id.altitudeLayout);
+        temperatureLayout = (LinearLayout) findViewById(R.id.temperatureLayout);
 
         if (!TextUtils.isEmpty(trekObject.getRegion())) {
             locationText.setText(trekObject.getRegion());
@@ -117,15 +119,25 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
 
         if (!TextUtils.isEmpty(trekObject.getDifficulty())) {
             difficultyText.setText(trekObject.getDifficulty());
-            if (trekObject.getDifficulty().equalsIgnoreCase("difficult")) {
-                difficultyIcon.setTextColor(getResources().getColor(R.color.red));
-            } else if (trekObject.getDifficulty().equalsIgnoreCase("easy")) {
-                difficultyIcon.setTextColor(getResources().getColor(R.color.green));
-            } else {
-                difficultyIcon.setTextColor(getResources().getColor(R.color.orange));
-            }
         } else {
             difficultyLayout.setVisibility(View.GONE);
+        }
+
+        if (trekObject.getHighestAltitudeInFeet() != null && trekObject.getHighestAltitudeInFeet() > 0) {
+            altitudeText.setText(trekObject.getHighestAltitudeInFeet() + " ft");
+        } else {
+            altitudeLayout.setVisibility(View.GONE);
+        }
+
+        if ((trekObject.getAverageTemperatureDayMaxCelcius() != null || trekObject.getAverageTemperatureNightMaxCelcius() != null)
+                && (trekObject.getAverageTemperatureDayMinCelcius() != null || trekObject.getAverageTemperatureNightMinCelcius() != null)) {
+            int highTemp = trekObject.getAverageTemperatureDayMaxCelcius() > trekObject.getAverageTemperatureNightMaxCelcius()
+                    ? trekObject.getAverageTemperatureDayMaxCelcius() : trekObject.getAverageTemperatureNightMaxCelcius();
+            int lowTemp = trekObject.getAverageTemperatureDayMinCelcius() < trekObject.getAverageTemperatureNightMinCelcius()
+                    ? trekObject.getAverageTemperatureDayMinCelcius() : trekObject.getAverageTemperatureNightMinCelcius();
+            temperatureText.setText(lowTemp + " - " + highTemp + " \u00b0" + "C");
+        } else {
+            temperatureLayout.setVisibility(View.GONE);
         }
     }
 

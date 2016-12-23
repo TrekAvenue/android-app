@@ -112,7 +112,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
             trekListResponseDto = new Gson().fromJson(response, TrekListResponseDto.class);
             trekList.clear();
             if (trekListResponseDto.getFlag().equals(Constants.NETWORK_CALL_SUCCESS_CODE)) {
-                trekList.addAll(trekListResponseDto.getTrek_data());
+                trekList.addAll(trekListResponseDto.getTrekData());
                 mAdapter.notifyDataSetChanged();
                 mAdapter.setLoaded();
             } else {
