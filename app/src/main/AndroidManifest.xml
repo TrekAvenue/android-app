@@ -31,12 +31,13 @@
         <activity
             android:name=".Activities.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"/>
+            android:theme="@style/SplashTheme" />
 
         <!-- Trek Detail Activity -->
-        <activity android:name=".Activities.TrekDetailActivity"
-            android:theme="@style/TransparentStatusBarTheme"/>
-
+        <activity
+            android:name=".Activities.TrekDetailActivity"
+            android:theme="@style/TransparentStatusBarTheme" />
+        <activity android:name=".Activities.SlotItineraryActivity"></activity>
     </application>
 
 </manifest>

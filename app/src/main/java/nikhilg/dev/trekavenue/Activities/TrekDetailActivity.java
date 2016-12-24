@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import nikhilg.dev.trekavenue.Adapters.ImagesAdapter;
+import nikhilg.dev.trekavenue.Adapters.OrganizerRecyclerAdapter;
 import nikhilg.dev.trekavenue.Data.ImageDto;
 import nikhilg.dev.trekavenue.Data.TrekDataDto;
 import nikhilg.dev.trekavenue.Interfaces.RandomCallback;
@@ -44,6 +46,10 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     // top images and toolbar helper items
     private ImagesAdapter mImagesAdapter;
     private int width, height;
+
+    // Organizer recyclerview items
+    private RecyclerView organizerRecyclerView;
+    private OrganizerRecyclerAdapter mOrganizerAdapter;
 
     // data variables
     private TrekDataDto trekObject;
@@ -138,6 +144,16 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
             temperatureText.setText(lowTemp + " - " + highTemp + " \u00b0" + "C");
         } else {
             temperatureLayout.setVisibility(View.GONE);
+        }
+
+        // setup organizer recycler view
+        if (trekObject.getOrganizers() != null && trekObject.getOrganizers().size() > 0) {
+            organizerRecyclerView = (RecyclerView) findViewById(R.id.organizerRecyclerView);
+            organizerRecyclerView.setNestedScrollingEnabled(false);
+            organizerRecyclerView.setHasFixedSize(true);
+            mOrganizerAdapter = new OrganizerRecyclerAdapter(trekObject.getOrganizers(), this);
+            organizerRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            organizerRecyclerView.setAdapter(mOrganizerAdapter);
         }
     }
 

@@ -10,6 +10,7 @@
     <color name="text_medium_gray">#9b9b9b</color>
     <color name="text_light_gray">#a4a4a4</color>
     <color name="gray_light_color">#bfbfbf</color>
+    <color name="line_gray_color">#dfdfdf</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

@@ -62,7 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:fitsSystemWindows="true"
         android:background="@color/background_color">
 
         <LinearLayout
@@ -230,6 +229,12 @@
                 android:textSize="12sp"
                 android:textColor="@color/text_dark_gray"
                 android:layout_marginLeft="16dp"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/organizerRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"/>
 
         </LinearLayout>
 

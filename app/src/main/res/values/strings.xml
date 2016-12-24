@@ -5,4 +5,11 @@
     <string name="view_all">View\\nAll</string>
     <string name="detail_placeholder_text">Details</string>
     <string name="providers_placeholder_text">Providers</string>
+    <string name="book">Book</string>
+    <string name="availableSlots">Available Slots</string>
+    <string name="itinerary">Check Itinerary</string>
+    <string name="startDate">Start Date - </string>
+    <string name="endDate">End Date - </string>
+    <string name="totalSlots">Total Slots - </string>
+    <string name="availableSlotsText">Available Slots - </string>
 </resources>

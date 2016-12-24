@@ -6,8 +6,10 @@ package nikhilg.dev.trekavenue.Data;
 public class SlotDto extends BaseDto {
 //    private Long startDate;
 //    private Long endDate;
+    private String startDate;
+    private String endDate;
     private Integer totalSlots;
-    private Integer seatsAvailable;
+    private Integer slotsAvailable;
     private String id;
 
 //    public Long getStartDate() {
@@ -35,11 +37,11 @@ public class SlotDto extends BaseDto {
     }
 
     public Integer getSeatsAvailable() {
-        return seatsAvailable;
+        return slotsAvailable;
     }
 
-    public void setSeatsAvailable(Integer seatsAvailable) {
-        this.seatsAvailable = seatsAvailable;
+    public void setSeatsAvailable(Integer slotsAvailable) {
+        this.slotsAvailable = slotsAvailable;
     }
 
     public String getId() {
@@ -48,5 +50,21 @@ public class SlotDto extends BaseDto {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 }

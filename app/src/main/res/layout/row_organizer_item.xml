@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    app:cardCornerRadius="2dp"
+    app:cardElevation="2dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Organizer name, price and durationg views -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
+                    android:id="@+id/organizerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/text_dark_gray"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="4dp">
+
+                    <nikhilg.dev.trekavenue.Utils.RobotoRegularTextView
+                        android:id="@+id/priceText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_medium_gray"/>
+
+                    <nikhilg.dev.trekavenue.Utils.RobotoRegularTextView
+                        android:id="@+id/durationText"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_medium_gray"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
+                android:id="@+id/bookButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/book"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:background="@color/colorPrimary"
+                android:textAllCaps="true"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/line_gray_color"
+            android:layout_marginTop="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <nikhilg.dev.trekavenue.Utils.RobotoRegularTextView
+                android:id="@+id/availableSlots"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/availableSlots"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackground"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/line_gray_color"
+                android:layout_margin="8dp"/>
+
+            <nikhilg.dev.trekavenue.Utils.RobotoRegularTextView
+                android:id="@+id/itinerary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:text="@string/itinerary"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center"
+                android:background="?attr/selectableItemBackground"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

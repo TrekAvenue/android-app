@@ -15,6 +15,5 @@
 
     <style name="TransparentStatusBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimaryDark">@color/black</item>
-        <!--<item name="android:windowBackground">@drawable/splash_drawable_background</item>-->
     </style>
 </resources>
