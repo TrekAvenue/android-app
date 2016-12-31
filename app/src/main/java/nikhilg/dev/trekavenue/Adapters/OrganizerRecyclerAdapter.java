@@ -3,12 +3,14 @@ package nikhilg.dev.trekavenue.Adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -61,8 +63,27 @@ public class OrganizerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
             vh.priceText.setText("Price - \u20B9" + organizerList.get(position).getPriceInr());
 
             vh.bookButton.setTag(position);
+            if (organizerList.get(position).getBookingLink() != null
+                    && !organizerList.get(position).getBookingLink().equalsIgnoreCase("null")
+                    && organizerList.get(position).getBookingLink().length() > 0) {
+                vh.bookButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            } else {
+                vh.bookButton.setBackgroundColor(ContextCompat.getColor(mContext, R.color.text_light_gray));
+            }
+
             vh.availableSlots.setTag(position);
+            if (organizerList.get(position).getSlots() != null && organizerList.get(position).getSlots().size() > 0) {
+                vh.availableSlots.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            } else {
+                vh.availableSlots.setTextColor(ContextCompat.getColor(mContext, R.color.text_medium_gray));
+            }
+
             vh.itinerary.setTag(position);
+            if (organizerList.get(position).getItinerary() != null && organizerList.get(position).getItinerary().size() > 0) {
+                vh.itinerary.setTextColor(ContextCompat.getColor(mContext, R.color.colorPrimary));
+            } else {
+                vh.itinerary.setTextColor(ContextCompat.getColor(mContext, R.color.text_medium_gray));
+            }
         }
     }
 
@@ -71,22 +92,41 @@ public class OrganizerRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         int position = (Integer) v.getTag();
         switch (v.getId()) {
             case R.id.bookButton:
-                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(organizerList.get(position).getBookingLink()));
-                mContext.startActivity(browserIntent);
+                if (organizerList.get(position).getBookingLink() != null
+                        && !organizerList.get(position).getBookingLink().equalsIgnoreCase("null")
+                        && organizerList.get(position).getBookingLink().length() > 0) {
+                    try {
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(organizerList.get(position).getBookingLink()));
+                        mContext.startActivity(browserIntent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Toast.makeText(mContext, "Unable to open booking link", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(mContext, "Unable to open booking link", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.availableSlots:
-                Intent slotIntent = new Intent(mContext, SlotItineraryActivity.class);
-                slotIntent.putExtra(Constants.TOOLBAR_TITLE, organizerList.get(position).getOrganizerName() + " - Slots");
-                slotIntent.putExtra(Constants.SHOW_SLOTS, true);
-                slotIntent.putExtra(Constants.ORGANIZER_OBJECT, new Gson().toJson(organizerList.get(position)));
-                mContext.startActivity(slotIntent);
+                if (organizerList.get(position).getSlots() != null && organizerList.get(position).getSlots().size() > 0) {
+                    Intent slotIntent = new Intent(mContext, SlotItineraryActivity.class);
+                    slotIntent.putExtra(Constants.TOOLBAR_TITLE, organizerList.get(position).getOrganizerName() + " - Slots");
+                    slotIntent.putExtra(Constants.SHOW_SLOTS, true);
+                    slotIntent.putExtra(Constants.ORGANIZER_OBJECT, new Gson().toJson(organizerList.get(position)));
+                    mContext.startActivity(slotIntent);
+                } else {
+                    Toast.makeText(mContext, "Slots information not available", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.itinerary:
-                Intent itineraryIntent = new Intent(mContext, SlotItineraryActivity.class);
-                itineraryIntent.putExtra(Constants.TOOLBAR_TITLE, organizerList.get(position).getOrganizerName() + " - Itinerary");
-                itineraryIntent.putExtra(Constants.SHOW_SLOTS, false);
-                itineraryIntent.putExtra(Constants.ORGANIZER_OBJECT, new Gson().toJson(organizerList.get(position)));
-                mContext.startActivity(itineraryIntent);
+                if (organizerList.get(position).getItinerary() != null && organizerList.get(position).getItinerary().size() > 0) {
+                    Intent itineraryIntent = new Intent(mContext, SlotItineraryActivity.class);
+                    itineraryIntent.putExtra(Constants.TOOLBAR_TITLE, organizerList.get(position).getOrganizerName() + " - Itinerary");
+                    itineraryIntent.putExtra(Constants.SHOW_SLOTS, false);
+                    itineraryIntent.putExtra(Constants.ORGANIZER_OBJECT, new Gson().toJson(organizerList.get(position)));
+                    mContext.startActivity(itineraryIntent);
+                } else {
+                    Toast.makeText(mContext, "Itinerary information not available", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }

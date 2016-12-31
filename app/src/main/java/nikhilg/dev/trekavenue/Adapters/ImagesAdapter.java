@@ -1,34 +1,20 @@
 package nikhilg.dev.trekavenue.Adapters;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import nikhilg.dev.trekavenue.Activities.TrekDetailActivity;
 import nikhilg.dev.trekavenue.Data.ImageDto;
-import nikhilg.dev.trekavenue.Data.TrekDataDto;
-import nikhilg.dev.trekavenue.Interfaces.OnLoadMoreListener;
 import nikhilg.dev.trekavenue.Interfaces.RandomCallback;
 import nikhilg.dev.trekavenue.R;
-import nikhilg.dev.trekavenue.Utils.Constants;
 
 /**
  * Created by nik on 17/12/16.

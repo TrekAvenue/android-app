@@ -1,6 +1,5 @@
 package nikhilg.dev.trekavenue.Activities;
 
-import android.app.Activity;
 import android.graphics.Typeface;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +26,6 @@ import nikhilg.dev.trekavenue.Data.TrekDataDto;
 import nikhilg.dev.trekavenue.Interfaces.RandomCallback;
 import nikhilg.dev.trekavenue.R;
 import nikhilg.dev.trekavenue.Utils.Constants;
-import nikhilg.dev.trekavenue.Utils.IconView;
 
 public class TrekDetailActivity extends AppCompatActivity implements RandomCallback {
 
@@ -99,6 +97,7 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
             imageView.setImageResource(R.drawable.placeholder_5_2);
         }
 
+        // handle toolbar title
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.ttf");
         final Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.ttf");
@@ -106,6 +105,7 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
         collapsingToolbar.setExpandedTitleTypeface(tf);
         collapsingToolbar.setTitle(trekObject.getName());
 
+        // image recyclerview below the collapsing toolbar
         imagesRecyclerView = (RecyclerView) findViewById(R.id.imagesRecyclerView);
         int selectedPos = 0;
         if (trekObject.getImages() != null && trekObject.getImages().size() > 0) {

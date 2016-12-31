@@ -1,5 +1,7 @@
 package nikhilg.dev.trekavenue.Adapters;
 
+import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,10 +22,12 @@ public class SlotItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
     private OrganizerDto organizer;
 
     private boolean showSlots;
+    private Context mContext;
 
-    public SlotItineraryAdapter(OrganizerDto organizer, boolean showSlots) {
+    public SlotItineraryAdapter(OrganizerDto organizer, boolean showSlots, Context mContext) {
         this.organizer = organizer;
         this.showSlots = showSlots;
+        this.mContext = mContext;
     }
 
     @Override
@@ -55,17 +59,26 @@ public class SlotItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 vh.endDate.setText(" " + endDate);
                 vh.totalSlots.setText(" " + String.valueOf(organizer.getSlots().get(position).getTotalSlots()));
                 vh.availableSlots.setText(" " + String.valueOf(organizer.getSlots().get(position).getSeatsAvailable()));
+
+                if (organizer.getSlots().get(position).getSeatsAvailable() != null
+                        && organizer.getSlots().get(position).getSeatsAvailable() > 0) {
+                    vh.outerLL.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
+                } else {
+                    vh.outerLL.setBackgroundColor(ContextCompat.getColor(mContext, R.color.background_color));
+                }
             } else {
                 vh.slotLayout.setVisibility(View.GONE);
                 vh.dateLayout.setVisibility(View.GONE);
                 vh.itineraryText.setVisibility(View.VISIBLE);
 
                 vh.itineraryText.setText(organizer.getItinerary().get(position));
+                vh.outerLL.setBackgroundColor(ContextCompat.getColor(mContext, R.color.white));
             }
         }
     }
 
     public class SlotItineraryViewHolder extends RecyclerView.ViewHolder {
+        public LinearLayout outerLL;
         public TextView startDate;
         private TextView endDate;
         private TextView totalSlots;
@@ -76,6 +89,7 @@ public class SlotItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
 
         public SlotItineraryViewHolder(View view) {
             super(view);
+            outerLL = (LinearLayout) view.findViewById(R.id.outerLL);
             startDate = (TextView) view.findViewById(R.id.startDate);
             endDate = (TextView) view.findViewById(R.id.endDate);
             totalSlots = (TextView) view.findViewById(R.id.totalSlots);

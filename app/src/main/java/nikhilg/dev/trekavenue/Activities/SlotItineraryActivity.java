@@ -44,7 +44,7 @@ public class SlotItineraryActivity extends AppCompatActivity implements Constant
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        mAdapter = new SlotItineraryAdapter(organizerDto, showSlots);
+        mAdapter = new SlotItineraryAdapter(organizerDto, showSlots, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(mAdapter);
     }
