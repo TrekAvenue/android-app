@@ -57,8 +57,16 @@ public class SlotItineraryAdapter extends RecyclerView.Adapter<RecyclerView.View
                 String endDate = ((String[]) organizer.getSlots().get(position).getEndDate().split("T"))[0];
                 vh.startDate.setText(" " + startDate);
                 vh.endDate.setText(" " + endDate);
-                vh.totalSlots.setText(" " + String.valueOf(organizer.getSlots().get(position).getTotalSlots()));
-                vh.availableSlots.setText(" " + String.valueOf(organizer.getSlots().get(position).getSeatsAvailable()));
+                if (organizer.getSlots().get(position).getTotalSlots() != null && organizer.getSlots().get(position).getTotalSlots() > 0) {
+                    vh.totalSlots.setText(" " + String.valueOf(organizer.getSlots().get(position).getTotalSlots()));
+                } else {
+                    vh.totalSlots.setText(" N/A");
+                }
+                if (organizer.getSlots().get(position).getSeatsAvailable() != null && organizer.getSlots().get(position).getSeatsAvailable() > 0) {
+                    vh.availableSlots.setText(" " + String.valueOf(organizer.getSlots().get(position).getSeatsAvailable()));
+                } else {
+                    vh.availableSlots.setText(" N/A");
+                }
 
                 if (organizer.getSlots().get(position).getSeatsAvailable() != null
                         && organizer.getSlots().get(position).getSeatsAvailable() > 0) {

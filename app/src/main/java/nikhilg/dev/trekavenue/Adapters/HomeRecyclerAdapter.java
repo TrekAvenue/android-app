@@ -218,7 +218,9 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             trekItem = (CardView) view.findViewById(R.id.trekItem);
             imageView = (ImageView) view.findViewById(R.id.imageView);
             imageContainer = (FrameLayout) view.findViewById(R.id.imageContainer);
-            imageContainer.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+            ViewGroup.LayoutParams lp = imageContainer.getLayoutParams();
+            lp.height = height;
+            imageContainer.setLayoutParams(lp);
             filterView = view.findViewById(R.id.filterView);
             trekName = (TextView) view.findViewById(R.id.trekName);
             priceText = (TextView) view.findViewById(R.id.priceText);

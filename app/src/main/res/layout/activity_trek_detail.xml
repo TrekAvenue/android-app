@@ -102,17 +102,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
                     android:orientation="vertical"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:gravity="center_vertical">
 
                     <!-- Location Layout -->
                     <LinearLayout
                         android:id="@+id/locationLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
                         android:gravity="center_vertical">
 
                         <nikhilg.dev.trekavenue.Utils.IconView
@@ -137,7 +136,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginTop="8dp"
                         android:gravity="center_vertical">
 
                         <!-- difficulty layout -->

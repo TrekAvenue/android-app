@@ -130,7 +130,9 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         public ViewAllViewHolder(View view) {
             super(view);
             viewAllLayout = (FrameLayout) view.findViewById(R.id.viewAllLayout);
-            viewAllLayout.setLayoutParams(new FrameLayout.LayoutParams(width, height));
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(width, height);
+            lp.setMargins(0, 0, 0, 16);
+            viewAllLayout.setLayoutParams(lp);
         }
     }
 
