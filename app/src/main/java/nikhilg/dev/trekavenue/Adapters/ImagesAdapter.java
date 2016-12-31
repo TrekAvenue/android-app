@@ -44,15 +44,15 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     // variables for image width, height
     private int width, height;
     private boolean showAll = false;
-    private int selectedIndex;
+    private int selectedPos;
 
     private Activity mContext;
 
-    public ImagesAdapter(List<ImageDto> imageURLList, RandomCallback randomCallback, Activity mContext, int selectedIndex) {
+    public ImagesAdapter(List<ImageDto> imageURLList, RandomCallback randomCallback, Activity mContext, int selectedPos) {
         this.imageURLList = imageURLList;
         this.randomCallback = randomCallback;
         this.mContext = mContext;
-        this.selectedIndex = selectedIndex;
+        this.selectedPos = selectedPos;
 
         width = mContext.getWindowManager().getDefaultDisplay().getWidth();
         width = width/5;
@@ -114,7 +114,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .error(R.drawable.placeholder)
                     .into(vh.imageView);
 
-            if (imageURLList.get(position).getIndex() == selectedIndex) {
+            if (position == selectedPos) {
                 vh.frameLayout.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
             } else {
                 vh.frameLayout.setBackgroundColor(mContext.getResources().getColor(R.color.gray_light_color));
@@ -127,12 +127,14 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onClick(View v) {
         int pos = (Integer) v.getTag();
-        if (selectedIndex != imageURLList.get(pos).getIndex()) {
-            selectedIndex = imageURLList.get(pos).getIndex();
+        if (pos != selectedPos) {
+            int oldPos = selectedPos;
+            selectedPos = pos;
+            notifyItemChanged(oldPos);
+            notifyItemChanged(selectedPos);
             Object[] data = new Object[1];
             data[0] = imageURLList.get(pos).getUrl();
             randomCallback.randomeMethod(data);
-            notifyDataSetChanged();
         }
     }
 
@@ -154,7 +156,9 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(view);
             frameLayout = (FrameLayout) view.findViewById(R.id.frameLayout);
             imageView = (ImageView) view.findViewById(R.id.imageView);
-            frameLayout.setLayoutParams(new FrameLayout.LayoutParams(width, height));
+            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(width, height);
+            lp.setMargins(0, 0, 0, 16);
+            frameLayout.setLayoutParams(lp);
         }
     }
 }

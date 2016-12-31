@@ -88,11 +88,15 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
         topImageContainer.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         imageView = (ImageView) findViewById(R.id.imageView);
 
-        for (ImageDto temp : trekObject.getImages()) {
-            if (temp.getIndex() == 0) {
-                loadImage(temp.getUrl());
-                break;
+        if (trekObject.getImages() != null && trekObject.getImages().size() > 0) {
+            for (ImageDto temp : trekObject.getImages()) {
+                if (temp.getIndex() == 0) {
+                    loadImage(temp.getUrl());
+                    break;
+                }
             }
+        } else {
+            imageView.setImageResource(R.drawable.placeholder_5_2);
         }
 
         collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -103,9 +107,19 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
         collapsingToolbar.setTitle(trekObject.getName());
 
         imagesRecyclerView = (RecyclerView) findViewById(R.id.imagesRecyclerView);
-        mImagesAdapter = new ImagesAdapter(trekObject.getImages(), this, this, 0);
-        imagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-        imagesRecyclerView.setAdapter(mImagesAdapter);
+        int selectedPos = 0;
+        if (trekObject.getImages() != null && trekObject.getImages().size() > 0) {
+            for (ImageDto image : trekObject.getImages()) {
+                if ( image.getIndex() == 0) {
+                    selectedPos = trekObject.getImages().indexOf(image);
+                    break;
+                }
+            }
+            mImagesAdapter = new ImagesAdapter(trekObject.getImages(), this, this, selectedPos);
+            imagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+            imagesRecyclerView.setAdapter(mImagesAdapter);
+            imagesRecyclerView.setNestedScrollingEnabled(false);
+        }
 
         // setup location and difficulty items
         locationText = (TextView) findViewById(R.id.locationText);
@@ -137,10 +151,26 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
 
         if ((trekObject.getAverageTemperatureDayMaxCelcius() != null || trekObject.getAverageTemperatureNightMaxCelcius() != null)
                 && (trekObject.getAverageTemperatureDayMinCelcius() != null || trekObject.getAverageTemperatureNightMinCelcius() != null)) {
-            int highTemp = trekObject.getAverageTemperatureDayMaxCelcius() > trekObject.getAverageTemperatureNightMaxCelcius()
-                    ? trekObject.getAverageTemperatureDayMaxCelcius() : trekObject.getAverageTemperatureNightMaxCelcius();
-            int lowTemp = trekObject.getAverageTemperatureDayMinCelcius() < trekObject.getAverageTemperatureNightMinCelcius()
-                    ? trekObject.getAverageTemperatureDayMinCelcius() : trekObject.getAverageTemperatureNightMinCelcius();
+            int highTemp = 0;
+            if (trekObject.getAverageTemperatureDayMaxCelcius() != null && trekObject.getAverageTemperatureNightMaxCelcius() != null) {
+                highTemp = trekObject.getAverageTemperatureDayMaxCelcius() > trekObject.getAverageTemperatureNightMaxCelcius()
+                       ? trekObject.getAverageTemperatureDayMaxCelcius() : trekObject.getAverageTemperatureNightMaxCelcius();
+            } else if (trekObject.getAverageTemperatureDayMaxCelcius() != null) {
+                highTemp = trekObject.getAverageTemperatureDayMaxCelcius();
+            } else if (trekObject.getAverageTemperatureNightMaxCelcius() != null) {
+                highTemp = trekObject.getAverageTemperatureNightMaxCelcius();
+            }
+
+            int lowTemp = 0;
+            if (trekObject.getAverageTemperatureDayMinCelcius() != null && trekObject.getAverageTemperatureNightMinCelcius() != null) {
+                lowTemp = trekObject.getAverageTemperatureDayMinCelcius() < trekObject.getAverageTemperatureNightMinCelcius()
+                        ? trekObject.getAverageTemperatureDayMinCelcius() : trekObject.getAverageTemperatureNightMinCelcius();
+            } else if (trekObject.getAverageTemperatureDayMinCelcius() != null) {
+                lowTemp = trekObject.getAverageTemperatureDayMinCelcius();
+            } else if (trekObject.getAverageTemperatureNightMinCelcius() != null) {
+                lowTemp = trekObject.getAverageTemperatureNightMinCelcius();
+            }
+
             temperatureText.setText(lowTemp + " - " + highTemp + " \u00b0" + "C");
         } else {
             temperatureLayout.setVisibility(View.GONE);

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import nikhilg.dev.trekavenue.Activities.TrekDetailActivity;
 import nikhilg.dev.trekavenue.Data.ImageDto;
+import nikhilg.dev.trekavenue.Data.OrganizerDto;
 import nikhilg.dev.trekavenue.Data.TrekDataDto;
 import nikhilg.dev.trekavenue.Interfaces.OnLoadMoreListener;
 import nikhilg.dev.trekavenue.R;
@@ -114,20 +116,63 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             TrekListItemViewHolder vh = (TrekListItemViewHolder) holder;
             TrekDataDto trekObject = trekList.get(position);
 
-            for (ImageDto temp : trekObject.getImages()) {
-                if (temp.getIndex() == 0) {
-                    Picasso.with(mContext)
-                            .load(temp.getUrl())
-                            .placeholder(R.drawable.placeholder_5_2)
-                            .error(R.drawable.placeholder_5_2)
-                            .into(vh.imageView);
-                    break;
+            if (trekObject.getImages() != null && trekObject.getImages().size() > 0) {
+                for (ImageDto temp : trekObject.getImages()) {
+                    if (temp.getIndex() == 0) {
+                        Picasso.with(mContext)
+                                .load(temp.getUrl())
+                                .placeholder(R.drawable.placeholder_5_2)
+                                .error(R.drawable.placeholder_5_2)
+                                .into(vh.imageView);
+                        break;
+                    }
                 }
+            } else {
+                vh.imageView.setImageResource(R.drawable.placeholder_5_2);
             }
 
-            // set trek name and location
-            vh.trekName.setText(trekObject.getName() + ", ");
-            vh.trekLocation.setText(trekObject.getRegion());
+            switch (position%7) {
+                case 0:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.magenta_filter));
+                    break;
+                case 1:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.blue_filter));
+                    break;
+                case 2:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.purple_filter));
+                    break;
+                case 3:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.orange_filter));
+                    break;
+                case 4:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.red_filter));
+                    break;
+                case 5:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.yellow_filter));
+                    break;
+                case 6:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.green_filter));
+                    break;
+                default:
+                    vh.filterView.setBackgroundColor(ContextCompat.getColor(mContext, R.color.magenta_filter));
+            }
+
+            // set trek name
+            vh.trekName.setText(trekObject.getName());
+
+            // set price
+            if (trekObject.getOrganizers() != null && trekObject.getOrganizers().size() > 0) {
+                int amount = Integer.MAX_VALUE;
+                for (OrganizerDto organizer : trekObject.getOrganizers()) {
+                    if (organizer.getPriceInr().intValue() < amount) {
+                        amount = organizer.getPriceInr().intValue();
+                    }
+                }
+                vh.priceText.setVisibility(View.VISIBLE);
+                vh.priceText.setText("Starting from : ₹" + amount);
+            } else {
+                vh.priceText.setVisibility(View.GONE);
+            }
 
             vh.trekItem.setTag(position);
         }
@@ -162,16 +207,21 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class TrekListItemViewHolder extends RecyclerView.ViewHolder {
         public CardView trekItem;
-        private TextView trekName, trekLocation;
+        private TextView trekName;
         public ImageView imageView;
+        public FrameLayout imageContainer;
+        public View filterView;
+        public TextView priceText;
 
         public TrekListItemViewHolder(View view) {
             super(view);
             trekItem = (CardView) view.findViewById(R.id.trekItem);
             imageView = (ImageView) view.findViewById(R.id.imageView);
-            imageView.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+            imageContainer = (FrameLayout) view.findViewById(R.id.imageContainer);
+            imageContainer.setLayoutParams(new LinearLayout.LayoutParams(width, height));
+            filterView = view.findViewById(R.id.filterView);
             trekName = (TextView) view.findViewById(R.id.trekName);
-            trekLocation = (TextView) view.findViewById(R.id.trekLocation);
+            priceText = (TextView) view.findViewById(R.id.priceText);
         }
     }
 }

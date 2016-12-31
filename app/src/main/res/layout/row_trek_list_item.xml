@@ -14,6 +14,57 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <FrameLayout
+            android:id="@+id/imageContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:transitionName="listImageTransition"/>
+
+            <View
+                android:id="@+id/filterView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/green_filter"
+                android:alpha="0.4"/>
+
+            <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
+                android:id="@+id/trekName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:transitionName="trekNameTransition"
+                android:layout_gravity="center"/>
+
+            <nikhilg.dev.trekavenue.Utils.RobotoRegularTextView
+                android:id="@+id/priceText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="4dp"
+                android:paddingRight="20dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:textSize="12sp"
+                android:textColor="@color/white"
+                android:layout_gravity="top|right"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,13 +74,7 @@
             android:paddingLeft="16dp"
             android:gravity="bottom">
 
-            <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
-                android:id="@+id/trekName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text_dark_gray"
-                android:textSize="16sp"
-                android:transitionName="trekNameTransition"/>
+
 
             <nikhilg.dev.trekavenue.Utils.RobotoRegularTextView
                 android:id="@+id/trekLocation"
@@ -45,13 +90,8 @@
             android:layout_height="0.5dp"
             android:background="@color/gray_light_color"/>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:transitionName="listImageTransition"/>
 
-    </LinearLayout>
+
+    </LinearLayout>-->
 
 </android.support.v7.widget.CardView>

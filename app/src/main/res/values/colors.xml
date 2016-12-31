@@ -17,5 +17,15 @@
     <color name="red">#F21A1A</color>
     <color name="green">#5AB019</color>
     <color name="orange">#F29910</color>
+    <color name="blue">#039BE5</color>
     <color name="light_yellow">#FFFFCC</color>
+
+    <color name="magenta_filter">#990099</color>
+    <color name="blue_filter">#0000CD</color>
+    <color name="purple_filter">#4B0082</color>
+    <color name="orange_filter">#D84315</color>
+    <color name="red_filter">#990012</color>
+    <color name="yellow_filter">#896210</color>
+    <color name="green_filter">#006400</color>
+
 </resources>
