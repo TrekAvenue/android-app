@@ -1,6 +1,7 @@
 package nikhilg.dev.trekavenue.Activities;
 
 import android.graphics.Typeface;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     // layout items
 
     // top images and toolbar items
+    private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbar;
     private FrameLayout topImageContainer;
     private ImageView imageView;
@@ -81,7 +83,16 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     }
 
     private void initLayout() {
+        // handle toolbar title
+        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
+        final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.ttf");
+        final Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.ttf");
+        collapsingToolbar.setCollapsedTitleTypeface(tf1);
+        collapsingToolbar.setExpandedTitleTypeface(tf);
+        collapsingToolbar.setTitle(trekObject.getName());
+
         // Setup top images and toolbar items and recyclerview
+        appBarLayout = (AppBarLayout) findViewById(R.id.appBarLayout);
         topImageContainer = (FrameLayout) findViewById(R.id.topImageContainer);
         topImageContainer.setLayoutParams(new LinearLayout.LayoutParams(width, height));
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -96,14 +107,6 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
         } else {
             imageView.setImageResource(R.drawable.placeholder_5_2);
         }
-
-        // handle toolbar title
-        collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
-        final Typeface tf = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.ttf");
-        final Typeface tf1 = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.ttf");
-        collapsingToolbar.setCollapsedTitleTypeface(tf1);
-        collapsingToolbar.setExpandedTitleTypeface(tf);
-        collapsingToolbar.setTitle(trekObject.getName());
 
         // image recyclerview below the collapsing toolbar
         imagesRecyclerView = (RecyclerView) findViewById(R.id.imagesRecyclerView);
@@ -209,6 +212,7 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     }
 
     private void loadImage(String url) {
+        appBarLayout.setExpanded(true);
         Picasso.with(this)
                 .load(url)
                 .placeholder(R.drawable.placeholder_5_2)
