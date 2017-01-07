@@ -119,7 +119,7 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
                 }
             }
             mImagesAdapter = new ImagesAdapter(trekObject.getImages(), this, this, selectedPos);
-            imagesRecyclerView.setLayoutManager(new GridLayoutManager(this, 4));
+            imagesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             imagesRecyclerView.setAdapter(mImagesAdapter);
             imagesRecyclerView.setNestedScrollingEnabled(false);
         }

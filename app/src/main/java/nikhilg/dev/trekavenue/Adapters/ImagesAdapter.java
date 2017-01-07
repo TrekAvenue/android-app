@@ -24,12 +24,8 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     private List<ImageDto> imageURLList;
     private RandomCallback randomCallback;
 
-    private final int VIEW_TYPE_ITEM = 0;
-    private final int VIEW_TYPE_MORE = 1;
-
     // variables for image width, height
     private int width, height;
-    private boolean showAll = false;
     private int selectedPos;
 
     private Activity mContext;
@@ -47,52 +43,21 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 
     @Override
     public int getItemCount() {
-        if (imageURLList == null) {
-            return 0;
-        } else if (imageURLList.size() < 5) {
-            return imageURLList.size();
-        } else if (showAll) {
-            return imageURLList.size();
-        } else {
-            return 4;
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 3 && imageURLList.size() > 4 && !showAll) {
-            return VIEW_TYPE_MORE;
-        } else {
-            return VIEW_TYPE_ITEM;
-        }
+        return imageURLList == null ? 0 : imageURLList.size();
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder viewHolder = null;
-        if (viewType == VIEW_TYPE_ITEM) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_image_item, parent, false);
-            viewHolder = new ImageItemViewHolder(view);
-            ((ImageItemViewHolder) viewHolder).frameLayout.setOnClickListener(this);
-        } else if (viewType == VIEW_TYPE_MORE) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_view_all_item, parent, false);
-            viewHolder = new ViewAllViewHolder(view);
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_image_item, parent, false);
+        viewHolder = new ImageItemViewHolder(view);
+        ((ImageItemViewHolder) viewHolder).frameLayout.setOnClickListener(this);
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ViewAllViewHolder) {
-            ViewAllViewHolder vh = (ViewAllViewHolder) holder;
-            vh.viewAllLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showAll = true;
-                    notifyDataSetChanged();
-                }
-            });
-        } else if (holder instanceof ImageItemViewHolder) {
+        if (holder instanceof ImageItemViewHolder) {
             ImageItemViewHolder vh = (ImageItemViewHolder) holder;
             Picasso.with(mContext)
                     .load(imageURLList.get(position).getUrl())
@@ -121,18 +86,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             Object[] data = new Object[1];
             data[0] = imageURLList.get(pos).getUrl();
             randomCallback.randomeMethod(data);
-        }
-    }
-
-    public class ViewAllViewHolder extends RecyclerView.ViewHolder {
-        public FrameLayout viewAllLayout;
-
-        public ViewAllViewHolder(View view) {
-            super(view);
-            viewAllLayout = (FrameLayout) view.findViewById(R.id.viewAllLayout);
-            FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(width, height);
-            lp.setMargins(0, 0, 0, 16);
-            viewAllLayout.setLayoutParams(lp);
         }
     }
 

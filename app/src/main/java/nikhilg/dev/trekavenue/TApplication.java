@@ -6,6 +6,8 @@ import android.content.Context;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import nikhilg.dev.trekavenue.Networking.NetworkCallManager;
 
 /**
@@ -21,6 +23,7 @@ public class TApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         TApplication.context = getApplicationContext();
 
         // make request queue for network calls
