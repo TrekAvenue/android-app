@@ -10,4 +10,8 @@ public interface Constants {
     public static final String TOOLBAR_TITLE = "toolbarTitle";
     public static final String SHOW_SLOTS = "showSlots";
     public static final String ORGANIZER_OBJECT = "organizerObject";
+    public static final String SEARCH_QUERY = "search_query";
+
+    // shared pref constant strings
+    public static final String RECENT_SEARCHES = "recent_searches";
 }

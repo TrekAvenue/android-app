@@ -14,7 +14,6 @@
 
         <!-- Acctivities -->
 
-
         <!-- Splash Activity -->
         <activity
             android:name=".Activities.SplashActivity"
@@ -37,14 +36,22 @@
         <activity
             android:name=".Activities.TrekDetailActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/TransparentStatusBarTheme"/>
+            android:theme="@style/TransparentStatusBarTheme" />
 
-        <activity android:name=".Activities.SlotItineraryActivity"
-            android:screenOrientation="portrait"/>
+        <!-- Itinerary activity -->
+        <activity
+            android:name=".Activities.SlotItineraryActivity"
+            android:screenOrientation="portrait" />
+
+        <!-- Search activity -->
+        <activity android:name=".Activities.SearchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"/>
 
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="9bf81761e6e7a1542ffea6f8c514aee9b1b3a046" />
+
     </application>
 
 </manifest>

@@ -13,4 +13,9 @@
     <string name="totalSlots">Total Slots - </string>
     <string name="availableSlotsText">Available Slots - </string>
     <string name="starting_from_string">Starting from : ₹ %1$s</string>
+    <string name="search_for">Search for</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="no_recent_searches">No recent searches</string>
+    <string name="enter_search_string">Please enter something to search for</string>
+    <string name="no_results">No results found</string>
 </resources>

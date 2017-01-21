@@ -1,6 +1,8 @@
 package nikhilg.dev.trekavenue.Utils;
 
+import android.content.Context;
 import android.text.TextUtils;
+import android.view.inputmethod.InputMethodManager;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
@@ -32,6 +34,13 @@ public class CommonLib {
 
         // log custom event
         answers.logCustom(event);
+    }
+
+    public static void hideKeyboard(Context context) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            imm.toggleSoftInput(0, InputMethodManager.HIDE_IMPLICIT_ONLY);
+        }
     }
 
 }

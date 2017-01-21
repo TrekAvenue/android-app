@@ -6,4 +6,9 @@
     <string name="sunny_icon">&#xe903;</string>
     <string name="duration_icon">&#xe904;</string>
     <string name="altitude_icon">&#xe905;</string>
+    <string name="left_small_icon">&#xe906;</string>
+    <string name="right_small_icon">&#xe907;</string>
+    <string name="search">&#xe908;</string>
+    <string name="filter">&#xe909;</string>
+    <string name="close_icon">&#xe90a;</string>
 </resources>

@@ -1,11 +1,14 @@
 package nikhilg.dev.trekavenue.Activities;
 
+import android.content.Intent;
+import android.graphics.drawable.Icon;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,6 +30,7 @@ import nikhilg.dev.trekavenue.Networking.RequestTypes;
 import nikhilg.dev.trekavenue.R;
 import nikhilg.dev.trekavenue.Utils.CommonLib;
 import nikhilg.dev.trekavenue.Utils.Constants;
+import nikhilg.dev.trekavenue.Utils.IconView;
 
 public class HomeActivity extends AppCompatActivity implements NetworkRequestCallback {
 
@@ -38,6 +42,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     // toolbar items
     private ImageView titleImageView;
     private TextView titleText;
+    private IconView searchIcon, filterIcon;
 
     // data variables
     private TrekListResponseDto trekListResponseDto;
@@ -48,12 +53,18 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
 
     private boolean destroyed;
 
+    private static final int FILTER_ACTIVITY_CODE = 101;
+
+    private String BASE_URL;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         destroyed = false;
+
+        BASE_URL = NetworkURLs.TREK_LIST_URL;
 
         initLayout();
 
@@ -76,7 +87,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
                 int skipNumber = trekList.size();
                 trekList.add(null);
                 mAdapter.notifyItemInserted(trekList.size() - 1);
-                String url = NetworkURLs.TREK_LIST_URL + "&skip=" + skipNumber;
+                String url = BASE_URL + "&skip=" + skipNumber;
                 NetworkCallManager.getInstance().MakeJsonGetRequest(RequestTypes.TREK_LIST_MORE, url, HomeActivity.this, HomeActivity.class.getSimpleName());
             }
         });
@@ -87,6 +98,8 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     private void initLayout() {
         titleImageView = (ImageView) findViewById(R.id.titleImageView);
         titleText = (TextView) findViewById(R.id.titleText);
+        searchIcon = (IconView) findViewById(R.id.searchIcon);
+        filterIcon = (IconView) findViewById(R.id.searchIcon);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -108,11 +121,18 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
                     recyclerView.smoothScrollToPosition(0);
             }
         });
+
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void refreshView() {
-        String url = NetworkURLs.TREK_LIST_URL;
-        NetworkCallManager.getInstance().MakeJsonGetRequest(RequestTypes.TREK_LIST, url, this, HomeActivity.class.getSimpleName());
+        NetworkCallManager.getInstance().MakeJsonGetRequest(RequestTypes.TREK_LIST, BASE_URL, this, HomeActivity.class.getSimpleName());
     }
 
     @Override
@@ -157,6 +177,15 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     protected void onDestroy() {
         destroyed = true;
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == FILTER_ACTIVITY_CODE && resultCode == RESULT_OK) {
+            // Log.d("HomeActivity", data.getStringExtra(Constants.SEARCH_QUERY));
+            // make search query
+        }
     }
 
 }

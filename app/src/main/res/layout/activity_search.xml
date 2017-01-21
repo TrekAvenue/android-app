@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/background_color">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="8dp"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="2dp"
+        app:cardBackgroundColor="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <nikhilg.dev.trekavenue.Utils.IconView
+                android:id="@+id/backIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/back_icon"
+                android:textSize="24dp"
+                android:textColor="@color/text_dark_gray"
+                android:padding="8dp"
+                android:layout_marginLeft="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"/>
+
+            <nikhilg.dev.trekavenue.Utils.RobotoMediumEditText
+                android:id="@+id/searchEditText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/text_dark_gray"
+                android:textSize="16sp"
+                android:textColorHint="@color/line_gray_color"
+                android:hint="@string/search_for"
+                android:layout_marginLeft="16dp"
+                android:background="@null"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:imeOptions="actionDone"/>
+
+            <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
+                android:id="@+id/searchText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/text_dark_gray"
+                android:textSize="16sp"
+                android:layout_marginLeft="16dp"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:visibility="gone"/>
+
+            <nikhilg.dev.trekavenue.Utils.IconView
+                android:id="@+id/searchIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search"
+                android:textSize="24dp"
+                android:textColor="@color/text_dark_gray"
+                android:padding="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"/>
+
+            <nikhilg.dev.trekavenue.Utils.IconView
+                android:id="@+id/removeSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/close_icon"
+                android:textSize="24dp"
+                android:textColor="@color/text_dark_gray"
+                android:padding="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="8dp"
+                android:clickable="true"
+                android:background="?attr/selectableItemBackground"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/recentSearchLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
+            android:id="@+id/recentSearchesPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_dark_gray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:textSize="14sp"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <nikhilg.dev.trekavenue.Utils.FlowLayout
+                android:id="@+id/flowLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"/>
+
+        </ScrollView>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/resultLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+        <LinearLayout
+            android:id="@+id/progressBarLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <nikhilg.dev.trekavenue.Utils.RobotoRegularTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:textSize="16sp"
+                android:text="@string/loading"
+                android:textColor="@color/text_dark_gray"/>
+
+        </LinearLayout>
+
+        <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
+            android:id="@+id/noResultText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_results"
+            android:textColor="@color/text_dark_gray"
+            android:layout_gravity="center"
+            android:layout_marginTop="24dp"
+            android:textSize="16sp"/>
+
+    </FrameLayout>
+
+</LinearLayout>
