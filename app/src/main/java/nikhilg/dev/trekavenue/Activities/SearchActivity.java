@@ -299,5 +299,6 @@ public class SearchActivity extends AppCompatActivity implements NetworkRequestC
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(0, R.anim.slide_out_right);
     }
 }

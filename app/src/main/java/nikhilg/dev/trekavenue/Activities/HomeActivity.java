@@ -127,6 +127,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
