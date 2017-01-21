@@ -9,6 +9,7 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -116,17 +117,12 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             TrekListItemViewHolder vh = (TrekListItemViewHolder) holder;
             TrekDataDto trekObject = trekList.get(position);
 
-            if (trekObject.getImages() != null && trekObject.getImages().size() > 0) {
-                for (ImageDto temp : trekObject.getImages()) {
-                    if (temp.getIndex() == 0) {
-                        Picasso.with(mContext)
-                                .load(temp.getUrl())
-                                .placeholder(R.drawable.placeholder_5_2)
-                                .error(R.drawable.placeholder_5_2)
-                                .into(vh.imageView);
-                        break;
-                    }
-                }
+            if (trekObject.getSummaryInfo() != null && !TextUtils.isEmpty(trekObject.getSummaryInfo().getBannerImageUrl())) {
+                Picasso.with(mContext)
+                        .load(trekObject.getSummaryInfo().getBannerImageUrl())
+                        .placeholder(R.drawable.placeholder_5_2)
+                        .error(R.drawable.placeholder_5_2)
+                        .into(vh.imageView);
             } else {
                 vh.imageView.setImageResource(R.drawable.placeholder_5_2);
             }
@@ -161,15 +157,10 @@ public class HomeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             vh.trekName.setText(trekObject.getName());
 
             // set price
-            if (trekObject.getOrganizers() != null && trekObject.getOrganizers().size() > 0) {
-                int amount = Integer.MAX_VALUE;
-                for (OrganizerDto organizer : trekObject.getOrganizers()) {
-                    if (organizer.getPriceInr().intValue() < amount) {
-                        amount = organizer.getPriceInr().intValue();
-                    }
-                }
+            if (trekObject.getSummaryInfo() != null && trekObject.getSummaryInfo().getStartingPriceInr() != null) {
+                String amount = String.valueOf(trekObject.getSummaryInfo().getStartingPriceInr().intValue());
                 vh.priceText.setVisibility(View.VISIBLE);
-                vh.priceText.setText("Starting from : ₹" + amount);
+                vh.priceText.setText(mContext.getString(R.string.starting_from_string, amount));
             } else {
                 vh.priceText.setVisibility(View.GONE);
             }

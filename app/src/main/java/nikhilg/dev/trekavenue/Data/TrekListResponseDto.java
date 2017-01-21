@@ -6,17 +6,16 @@ import java.util.ArrayList;
  * Created by nik on 4/12/16.
  */
 public class TrekListResponseDto extends BaseDto {
-    private Integer flag;
+    private int flag;
     private String message;
     private ArrayList<TrekDataDto> trekData;
     private Integer status;
-    private Long nextTrekId;
 
-    public Integer getFlag() {
+    public int getFlag() {
         return flag;
     }
 
-    public void setFlag(Integer flag) {
+    public void setFlag(int flag) {
         this.flag = flag;
     }
 
@@ -42,13 +41,5 @@ public class TrekListResponseDto extends BaseDto {
 
     public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    public Long getNextTrekId() {
-        return nextTrekId;
-    }
-
-    public void setNextTrekId(Long nextTrekId) {
-        this.nextTrekId = nextTrekId;
     }
 }

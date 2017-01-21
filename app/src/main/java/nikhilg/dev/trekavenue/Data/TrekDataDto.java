@@ -11,15 +11,15 @@ public class TrekDataDto extends BaseDto {
     private String description;
     private String region;
     private String country;
-    private String difficulty;
     private Long highestAltitudeInFeet;
     private Integer averageTemperatureDayMaxCelcius;
     private Integer averageTemperatureDayMinCelcius;
     private Integer averageTemperatureNightMaxCelcius;
     private Integer averageTemperatureNightMinCelcius;
-    private String getYourselfFit;
-    private String thingsToTake;
     private Boolean isActive;
+    private String difficulty;
+    private SummaryInfo summaryInfo;
+
     private ArrayList<OrganizerDto> organizers;
     private ArrayList<ImageDto> images;
 
@@ -103,14 +103,6 @@ public class TrekDataDto extends BaseDto {
         this.difficulty = difficulty;
     }
 
-    public String getGetYourselfFit() {
-        return getYourselfFit;
-    }
-
-    public void setGetYourselfFit(String getYourselfFit) {
-        this.getYourselfFit = getYourselfFit;
-    }
-
     public Long getHighestAltitudeInFeet() {
         return highestAltitudeInFeet;
     }
@@ -143,11 +135,11 @@ public class TrekDataDto extends BaseDto {
         this.organizers = organizers;
     }
 
-    public String getThingsToTake() {
-        return thingsToTake;
+    public SummaryInfo getSummaryInfo() {
+        return summaryInfo;
     }
 
-    public void setThingsToTake(String thingsToTake) {
-        this.thingsToTake = thingsToTake;
+    public void setSummaryInfo(SummaryInfo summaryInfo) {
+        this.summaryInfo = summaryInfo;
     }
 }

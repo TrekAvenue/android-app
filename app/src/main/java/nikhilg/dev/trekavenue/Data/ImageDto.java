@@ -6,6 +6,7 @@ package nikhilg.dev.trekavenue.Data;
 public class ImageDto {
     private Integer index;
     private String url;
+    private String thumbnailUrl;
 
     public Integer getIndex() {
         return index;
@@ -21,5 +22,13 @@ public class ImageDto {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
+    public void setThumbnailUrl(String thumbnailUrl) {
+        this.thumbnailUrl = thumbnailUrl;
     }
 }

@@ -12,4 +12,5 @@
     <string name="endDate">End Date - </string>
     <string name="totalSlots">Total Slots - </string>
     <string name="availableSlotsText">Available Slots - </string>
+    <string name="starting_from_string">Starting from : ₹ %1$s</string>
 </resources>

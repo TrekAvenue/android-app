@@ -73,14 +73,15 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
         mAdapter.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (trekListResponseDto.getNextTrekId() != null && trekListResponseDto.getNextTrekId() > 0) {
-                    trekList.add(null);
-                    mAdapter.notifyItemInserted(trekList.size() - 1);
-                    String url = NetworkURLs.TREK_LIST_URL + "?nextTrekId=" + trekListResponseDto.getNextTrekId();
-                    NetworkCallManager.getInstance().MakeJsonGetRequest(RequestTypes.TREK_LIST_MORE, url, HomeActivity.this, HomeActivity.class.getSimpleName());
-                }
+                int skipNumber = trekList.size();
+                trekList.add(null);
+                mAdapter.notifyItemInserted(trekList.size() - 1);
+                String url = NetworkURLs.TREK_LIST_URL + "&skip=" + skipNumber;
+                NetworkCallManager.getInstance().MakeJsonGetRequest(RequestTypes.TREK_LIST_MORE, url, HomeActivity.this, HomeActivity.class.getSimpleName());
             }
         });
+
+        setOnClickListener();
     }
 
     private void initLayout() {
@@ -99,6 +100,16 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
         progressBarLayout.setVisibility(View.VISIBLE);
     }
 
+    private void setOnClickListener() {
+        titleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (recyclerView != null && trekList != null && trekList.size() > 0)
+                    recyclerView.smoothScrollToPosition(0);
+            }
+        });
+    }
+
     private void refreshView() {
         String url = NetworkURLs.TREK_LIST_URL;
         NetworkCallManager.getInstance().MakeJsonGetRequest(RequestTypes.TREK_LIST, url, this, HomeActivity.class.getSimpleName());
@@ -107,17 +118,32 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     @Override
     public void onSuccess(int requestType, String response) {
         if (!destroyed) {
-            progressBarLayout.setVisibility(View.GONE);
-            swipeRefreshLayout.setVisibility(View.VISIBLE);
-            swipeRefreshLayout.setRefreshing(false);
-            trekListResponseDto = new Gson().fromJson(response, TrekListResponseDto.class);
-            trekList.clear();
-            if (trekListResponseDto.getFlag().equals(Constants.NETWORK_CALL_SUCCESS_CODE)) {
-                trekList.addAll(trekListResponseDto.getTrekData());
+            if (requestType == RequestTypes.TREK_LIST) {
+                progressBarLayout.setVisibility(View.GONE);
+                swipeRefreshLayout.setVisibility(View.VISIBLE);
+                swipeRefreshLayout.setRefreshing(false);
+                trekListResponseDto = new Gson().fromJson(response, TrekListResponseDto.class);
+                trekList.clear();
+                if (trekListResponseDto.getFlag() == Constants.NETWORK_CALL_SUCCESS_CODE) {
+                    trekList.addAll(trekListResponseDto.getTrekData());
+                } else {
+                    Toast.makeText(HomeActivity.this, trekListResponseDto.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 mAdapter.notifyDataSetChanged();
                 mAdapter.setLoaded();
-            } else {
-                Toast.makeText(HomeActivity.this, trekListResponseDto.getMessage(), Toast.LENGTH_SHORT).show();
+            } else if (requestType == RequestTypes.TREK_LIST_MORE) {
+                trekListResponseDto = new Gson().fromJson(response, TrekListResponseDto.class);
+                if (trekList != null && trekList.size() > 0 && trekList.get(trekList.size() - 1) == null) {
+                    trekList.remove(trekList.size() - 1);
+                    mAdapter.notifyItemRemoved(trekList.size());
+                }
+                if (trekListResponseDto.getFlag() == Constants.NETWORK_CALL_SUCCESS_CODE
+                        && trekListResponseDto.getTrekData() != null
+                        && trekListResponseDto.getTrekData().size() > 0) {
+                    trekList.addAll(trekListResponseDto.getTrekData());
+                    mAdapter.setLoaded();
+                    mAdapter.notifyDataSetChanged();
+                }
             }
         }
     }

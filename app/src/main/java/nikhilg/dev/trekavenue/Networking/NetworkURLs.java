@@ -9,6 +9,6 @@ public class NetworkURLs {
 
     public static String BASE_URL = BuildConfig.BASE_URL;
 
-    public static String TREK_LIST_URL = "trek";
+    public static String TREK_LIST_URL = "trek?gzip=true";
 
 }
