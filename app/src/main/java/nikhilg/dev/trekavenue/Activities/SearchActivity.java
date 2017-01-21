@@ -217,7 +217,7 @@ public class SearchActivity extends AppCompatActivity implements NetworkRequestC
 
         searchText.setText(result);
 
-        BASE_URL = NetworkURLs.TREK_LIST_URL;
+        BASE_URL = NetworkURLs.TREK_LIST_URL + "&filter={\"name\":{\"$regex\":\"" + result + "\",\"$options\":\"i\"}}";
 
         trekList = new ArrayList<>();
         mAdapter = new HomeRecyclerAdapter(trekList, recyclerView, this);
