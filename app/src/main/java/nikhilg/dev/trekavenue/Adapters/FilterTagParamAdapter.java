@@ -1,6 +1,7 @@
 package nikhilg.dev.trekavenue.Adapters;
 
 import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import nikhilg.dev.trekavenue.Data.KeyValueObject;
 import nikhilg.dev.trekavenue.R;
 
 /**
@@ -16,10 +18,12 @@ import nikhilg.dev.trekavenue.R;
  */
 public class FilterTagParamAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener {
 
-    private List<String> tagList;
+    private List<KeyValueObject> tagList;
     private Activity mContext;
 
-    public FilterTagParamAdapter(List<String> tagList, Activity mContext) {
+    int selectedPosition = -1;
+
+    public FilterTagParamAdapter(List<KeyValueObject> tagList, Activity mContext) {
         this.tagList = tagList;
         this.mContext = mContext;
     }
@@ -41,15 +45,33 @@ public class FilterTagParamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FilterTagViewHolder) {
             FilterTagViewHolder vh = (FilterTagViewHolder) holder;
-            vh.filterTagText.setText(tagList.get(position));
+            vh.filterTagText.setText(tagList.get(position).getValue());
             vh.filterTagText.setTag(position);
+
+            if (selectedPosition == position) {
+                vh.filterTagText.setBackgroundResource(R.drawable.recent_search_item_selected);
+                vh.filterTagText.setTextColor(mContext.getResources().getColor(R.color.white));
+            } else {
+                vh.filterTagText.setBackgroundResource(R.drawable.recent_search_item_background);
+                vh.filterTagText.setTextColor(mContext.getResources().getColor(R.color.text_medium_gray));
+            }
         }
     }
 
     @Override
     public void onClick(View v) {
         int position = (Integer) v.getTag();
-
+        int oldPos = selectedPosition;
+        selectedPosition = position;
+        if (oldPos == selectedPosition) {
+            selectedPosition = -1;
+            notifyItemChanged(oldPos);
+            return;
+        }
+        if (oldPos >= 0) {
+            notifyItemChanged(oldPos);
+        }
+        notifyItemChanged(selectedPosition);
     }
 
     public class FilterTagViewHolder extends RecyclerView.ViewHolder {

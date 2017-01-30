@@ -3,18 +3,25 @@
     android:id="@+id/filterParamLayout"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
     <nikhilg.dev.trekavenue.Utils.RobotoMediumTextView
         android:id="@+id/filterParamTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        android:textColor="@color/text_dark_gray"/>
+        android:textSize="14sp"
+        android:textColor="@color/text_dark_gray"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="4dp"/>
 
 </LinearLayout>

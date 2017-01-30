@@ -16,6 +16,12 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import nikhilg.dev.trekavenue.Data.FilterObject;
 import nikhilg.dev.trekavenue.Data.FilterParams;
 import nikhilg.dev.trekavenue.Interfaces.NetworkRequestCallback;
 import nikhilg.dev.trekavenue.Networking.NetworkCallManager;
@@ -75,11 +81,55 @@ public class SplashActivity extends AppCompatActivity implements NetworkRequestC
         finish();
     }
 
+    private FilterParams parseFilterParamsResponse(String response) {
+        FilterParams filterParams = new FilterParams();
+        try {
+            JSONObject responseObject = new JSONObject(response);
+            if (responseObject.has("flag") && responseObject.get("flag") instanceof Integer) {
+                filterParams.setFlag(responseObject.getInt("flag"));
+            }
+            if (responseObject.has("message")) {
+                filterParams.setMessage(String.valueOf(responseObject.get("message")));
+            }
+            if (responseObject.has("status") && responseObject.get("status") instanceof Integer) {
+                filterParams.setStatus(responseObject.getInt("status"));
+            }
+            if (responseObject.has("filters") && responseObject.get("filters") instanceof JSONArray) {
+                ArrayList<FilterObject> filters = new ArrayList<>();
+                JSONArray array = responseObject.getJSONArray("filters");
+                if (array != null && array.length() > 0) {
+                    for (int i=0; i<array.length(); i++) {
+                        FilterObject temp = new FilterObject();
+                        JSONObject obj = array.getJSONObject(i);
+                        if (obj.has("criteriaName")) {
+                            temp.setCriteriaName(String.valueOf(obj.get("criteriaName")));
+                        }
+                        if (obj.has("criteriakey")) {
+                            temp.setCriteriakey(String.valueOf(obj.get("criteriakey")));
+                        }
+                        if (obj.has("filterType")) {
+                            temp.setFilterType(String.valueOf(obj.get("filterType")));
+                        }
+                        if (obj.has("filterValues") && obj.get("filterValues") instanceof JSONObject) {
+                            temp.setFilterValues(obj.getJSONObject("filterValues"));
+                        }
+                        filters.add(temp);
+                    }
+                }
+                filterParams.setFilters(filters);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return filterParams;
+    }
+
     @Override
     public void onSuccess(int requestType, String response) {
         if (!destroyed) {
             if (requestType == RequestTypes.FILTER_PARAMS && response != null) {
-                FilterParams filterParams = new Gson().fromJson(response, FilterParams.class);
+                FilterParams filterParams = parseFilterParamsResponse(response);
                 if (filterParams.getFlag() == Constants.NETWORK_CALL_SUCCESS_CODE) {
                     ((TApplication) getApplication()).setFilterParams(filterParams);
                     filterCallComplete = true;
