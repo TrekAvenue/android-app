@@ -18,4 +18,5 @@
     <string name="no_recent_searches">No recent searches</string>
     <string name="enter_search_string">Please enter something to search for</string>
     <string name="no_results">No results found</string>
+    <string name="filter_title">Filter</string>
 </resources>
