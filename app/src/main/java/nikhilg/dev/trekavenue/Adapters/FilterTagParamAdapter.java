@@ -11,6 +11,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import nikhilg.dev.trekavenue.Data.KeyValueObject;
+import nikhilg.dev.trekavenue.Interfaces.RandomCallback;
 import nikhilg.dev.trekavenue.R;
 
 /**
@@ -20,12 +21,16 @@ public class FilterTagParamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     private List<KeyValueObject> tagList;
     private Activity mContext;
+    private String paramKey;
+    private RandomCallback randomCallback;
 
     int selectedPosition = -1;
 
-    public FilterTagParamAdapter(List<KeyValueObject> tagList, Activity mContext) {
+    public FilterTagParamAdapter(List<KeyValueObject> tagList, String paramKey, Activity mContext, RandomCallback randomCallback) {
         this.tagList = tagList;
         this.mContext = mContext;
+        this.paramKey = paramKey;
+        this.randomCallback = randomCallback;
     }
 
     @Override
@@ -66,12 +71,14 @@ public class FilterTagParamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (oldPos == selectedPosition) {
             selectedPosition = -1;
             notifyItemChanged(oldPos);
+            randomCallback.randomeMethod(new Object[] {paramKey, null});
             return;
         }
         if (oldPos >= 0) {
             notifyItemChanged(oldPos);
         }
         notifyItemChanged(selectedPosition);
+        randomCallback.randomeMethod(new Object[]{paramKey, tagList.get(selectedPosition).getKey()});
     }
 
     public class FilterTagViewHolder extends RecyclerView.ViewHolder {

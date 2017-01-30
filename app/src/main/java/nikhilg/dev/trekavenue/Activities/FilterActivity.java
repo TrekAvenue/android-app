@@ -21,20 +21,25 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import nikhilg.dev.trekavenue.Adapters.FilterTagParamAdapter;
 import nikhilg.dev.trekavenue.Data.FilterObject;
 import nikhilg.dev.trekavenue.Data.FilterParams;
 import nikhilg.dev.trekavenue.Data.KeyValueObject;
+import nikhilg.dev.trekavenue.Interfaces.RandomCallback;
 import nikhilg.dev.trekavenue.R;
 import nikhilg.dev.trekavenue.TApplication;
 
-public class FilterActivity extends AppCompatActivity {
+public class FilterActivity extends AppCompatActivity implements RandomCallback {
 
     private Toolbar toolbar;
     private LinearLayout filterParamsContainer;
+    private TextView apply;
 
     private FilterParams filterParams;
+
+    private HashMap<String, Object> selectedFilterParams = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,8 @@ public class FilterActivity extends AppCompatActivity {
             finish();
 
         initLayout();
+
+        setOnClickListener();
     }
 
     private void initLayout() {
@@ -58,14 +65,17 @@ public class FilterActivity extends AppCompatActivity {
             FilterObject filter = filterParams.getFilters().get(i);
             switch (filter.getFilterType()) {
                 case "SLIDER":
-                    addSliderFilter(i, filter);
+                    selectedFilterParams.put(filter.getCriteriakey(), -1);
+                    addSliderFilter(filter.getCriteriakey(), filter);
                     break;
                 case "TAGS":
-                    addTagFilter(i, filter);
+                    selectedFilterParams.put(filter.getCriteriakey(), null);
+                    addTagFilter(filter.getCriteriakey(), filter);
                     break;
             }
         }
 
+        apply = (TextView) findViewById(R.id.apply);
     }
 
     private void setUpToolbar() {
@@ -79,20 +89,21 @@ public class FilterActivity extends AppCompatActivity {
         }
     }
 
-    private void addSliderFilter(int pos, FilterObject filterObject) {
+    private void addSliderFilter(String paramKey, FilterObject filterObject) {
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = vi.inflate(R.layout.filter_seekbar_layout, null);
 
         TextView title = (TextView) v.findViewById(R.id.filterParamTitle);
         title.setText(filterObject.getCriteriaName());
 
-        int min, max;
+        int min = 0, max = 0;
 
         TextView minText, maxText;
         minText = (TextView) v.findViewById(R.id.min);
         maxText = (TextView) v.findViewById(R.id.max);
 
         SeekBar seekBar = (SeekBar) v.findViewById(R.id.seekBar);
+        seekBar.setTag(paramKey);
         try {
             min = filterObject.getFilterValues().getJSONObject("sliderValues").getInt("min");
             max = filterObject.getFilterValues().getJSONObject("sliderValues").getInt("max");
@@ -101,11 +112,15 @@ public class FilterActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        final int minv = min;
+        final int maxv = max;
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                Log.d("nikhilseek", "progress : " + progress);
+                String key = (String) seekBar.getTag();
+                int value = minv + ((maxv - minv) * progress / 100);
+                selectedFilterParams.put(key, value);
             }
 
             @Override
@@ -122,7 +137,7 @@ public class FilterActivity extends AppCompatActivity {
         filterParamsContainer.addView(v, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
-    private void addTagFilter(int pos, FilterObject filterObject) {
+    private void addTagFilter(String paramKey, FilterObject filterObject) {
         LayoutInflater vi = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View v = vi.inflate(R.layout.filter_tag_layout, null);
 
@@ -145,7 +160,7 @@ public class FilterActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
-        FilterTagParamAdapter mAdapter = new FilterTagParamAdapter(tagsList, this);
+        FilterTagParamAdapter mAdapter = new FilterTagParamAdapter(tagsList, paramKey, this, this);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(mAdapter);
 
@@ -166,5 +181,16 @@ public class FilterActivity extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(0, R.anim.slide_out_right);
+    }
+
+    @Override
+    public void randomeMethod(Object[] data) {
+        String key = (String) data[0];
+        String value = (String) data[1];
+        selectedFilterParams.put(key, value);
+    }
+
+    private void setOnClickListener() {
+        
     }
 }

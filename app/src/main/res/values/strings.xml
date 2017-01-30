@@ -19,4 +19,5 @@
     <string name="enter_search_string">Please enter something to search for</string>
     <string name="no_results">No results found</string>
     <string name="filter_title">Filter</string>
+    <string name="apply_filter">Apply Filter</string>
 </resources>
