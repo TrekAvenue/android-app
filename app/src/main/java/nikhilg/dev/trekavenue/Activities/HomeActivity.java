@@ -99,7 +99,7 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
         titleImageView = (ImageView) findViewById(R.id.titleImageView);
         titleText = (TextView) findViewById(R.id.titleText);
         searchIcon = (IconView) findViewById(R.id.searchIcon);
-        filterIcon = (IconView) findViewById(R.id.searchIcon);
+        filterIcon = (IconView) findViewById(R.id.filterIcon);
 
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
@@ -126,6 +126,15 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
+
+        filterIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeActivity.this, FilterActivity.class);
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }

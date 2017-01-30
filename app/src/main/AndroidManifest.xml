@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- Acctivities -->
+        <!-- Activities -->
 
         <!-- Splash Activity -->
         <activity
@@ -44,9 +44,16 @@
             android:screenOrientation="portrait" />
 
         <!-- Search activity -->
-        <activity android:name=".Activities.SearchActivity"
+        <activity
+            android:name=".Activities.SearchActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashTheme"/>
+            android:theme="@style/SplashTheme" />
+
+        <!-- Search activity -->
+        <activity
+            android:name=".Activities.FilterActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

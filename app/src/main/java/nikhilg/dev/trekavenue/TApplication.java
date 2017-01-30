@@ -8,6 +8,7 @@ import com.android.volley.toolbox.Volley;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+import nikhilg.dev.trekavenue.Data.FilterParams;
 import nikhilg.dev.trekavenue.Networking.NetworkCallManager;
 
 /**
@@ -19,6 +20,8 @@ public class TApplication extends Application {
 
     public static RequestQueue networkRequestQueue;
     private static Context context;
+
+    private FilterParams filterParams;
 
     @Override
     public void onCreate() {
@@ -39,5 +42,13 @@ public class TApplication extends Application {
 
     public void MakeRequestQueue() {
         networkRequestQueue = Volley.newRequestQueue(getApplicationContext());
+    }
+
+    public FilterParams getFilterParams() {
+        return filterParams;
+    }
+
+    public void setFilterParams(FilterParams filterParams) {
+        this.filterParams = filterParams;
     }
 }

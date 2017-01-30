@@ -7,4 +7,5 @@ public class RequestTypes {
     // Each network call will be assigned a specific requesttype
     public static final int TREK_LIST = 101;
     public static final int TREK_LIST_MORE = 102;
+    public static final int FILTER_PARAMS = 103;
 }

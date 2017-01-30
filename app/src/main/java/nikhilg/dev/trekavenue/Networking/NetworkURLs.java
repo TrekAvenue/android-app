@@ -11,4 +11,6 @@ public class NetworkURLs {
 
     public static String TREK_LIST_URL = "trek?gzip=true";
 
+    public static String FILTER_PARAMS_URL = "filters?gzip=true";
+
 }
