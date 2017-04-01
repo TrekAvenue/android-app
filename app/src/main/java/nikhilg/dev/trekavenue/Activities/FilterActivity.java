@@ -1,6 +1,7 @@
 package nikhilg.dev.trekavenue.Activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -30,6 +32,7 @@ import nikhilg.dev.trekavenue.Data.KeyValueObject;
 import nikhilg.dev.trekavenue.Interfaces.RandomCallback;
 import nikhilg.dev.trekavenue.R;
 import nikhilg.dev.trekavenue.TApplication;
+import nikhilg.dev.trekavenue.Utils.Constants;
 
 public class FilterActivity extends AppCompatActivity implements RandomCallback {
 
@@ -65,11 +68,9 @@ public class FilterActivity extends AppCompatActivity implements RandomCallback 
             FilterObject filter = filterParams.getFilters().get(i);
             switch (filter.getFilterType()) {
                 case "SLIDER":
-                    selectedFilterParams.put(filter.getCriteriakey(), -1);
                     addSliderFilter(filter.getCriteriakey(), filter);
                     break;
                 case "TAGS":
-                    selectedFilterParams.put(filter.getCriteriakey(), null);
                     addTagFilter(filter.getCriteriakey(), filter);
                     break;
             }
@@ -102,6 +103,8 @@ public class FilterActivity extends AppCompatActivity implements RandomCallback 
         minText = (TextView) v.findViewById(R.id.min);
         maxText = (TextView) v.findViewById(R.id.max);
 
+        final TextView filterValueSelected = (TextView) v.findViewById(R.id.filterValueSelected);
+
         SeekBar seekBar = (SeekBar) v.findViewById(R.id.seekBar);
         seekBar.setTag(paramKey);
         try {
@@ -121,6 +124,7 @@ public class FilterActivity extends AppCompatActivity implements RandomCallback 
                 String key = (String) seekBar.getTag();
                 int value = minv + ((maxv - minv) * progress / 100);
                 selectedFilterParams.put(key, value);
+                filterValueSelected.setText(" - " + value);
             }
 
             @Override
@@ -184,13 +188,29 @@ public class FilterActivity extends AppCompatActivity implements RandomCallback 
     }
 
     @Override
-    public void randomeMethod(Object[] data) {
+    public void randomMethod(Object[] data) {
         String key = (String) data[0];
         String value = (String) data[1];
-        selectedFilterParams.put(key, value);
+        if (value == null && selectedFilterParams.containsKey(key)) {
+            selectedFilterParams.remove(key);
+        } else {
+            selectedFilterParams.put(key, value);
+        }
     }
 
     private void setOnClickListener() {
-        
+        apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (selectedFilterParams != null && selectedFilterParams.keySet().size() > 0) {
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(Constants.FILTER_QUERY, new Gson().toJson(selectedFilterParams));
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                } else {
+                    Toast.makeText(FilterActivity.this, "Select some parameters to apply filter first", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

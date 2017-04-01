@@ -1,7 +1,6 @@
 package nikhilg.dev.trekavenue.Adapters;
 
 import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,14 +70,14 @@ public class FilterTagParamAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         if (oldPos == selectedPosition) {
             selectedPosition = -1;
             notifyItemChanged(oldPos);
-            randomCallback.randomeMethod(new Object[] {paramKey, null});
+            randomCallback.randomMethod(new Object[]{paramKey, null});
             return;
         }
         if (oldPos >= 0) {
             notifyItemChanged(oldPos);
         }
         notifyItemChanged(selectedPosition);
-        randomCallback.randomeMethod(new Object[]{paramKey, tagList.get(selectedPosition).getKey()});
+        randomCallback.randomMethod(new Object[]{paramKey, tagList.get(selectedPosition).getKey()});
     }
 
     public class FilterTagViewHolder extends RecyclerView.ViewHolder {

@@ -2,6 +2,7 @@ package nikhilg.dev.trekavenue.Activities;
 
 import android.content.Intent;
 import android.graphics.drawable.Icon;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -52,6 +53,8 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     private HomeRecyclerAdapter mAdapter;
 
     private boolean destroyed;
+
+    private boolean filterActive;
 
     private static final int FILTER_ACTIVITY_CODE = 101;
 
@@ -134,9 +137,14 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
         filterIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeActivity.this, FilterActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if (filterActive) {
+                    filterActive = false;
+                    filterIcon.setTextColor(ContextCompat.getColor(HomeActivity.this, R.color.text_light_gray));
+                } else {
+                    Intent intent = new Intent(HomeActivity.this, FilterActivity.class);
+                    startActivityForResult(intent, FILTER_ACTIVITY_CODE);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
             }
         });
     }
@@ -193,8 +201,8 @@ public class HomeActivity extends AppCompatActivity implements NetworkRequestCal
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == FILTER_ACTIVITY_CODE && resultCode == RESULT_OK) {
-            // Log.d("HomeActivity", data.getStringExtra(Constants.SEARCH_QUERY));
-            // make search query
+            filterActive = true;
+            filterIcon.setTextColor(ContextCompat.getColor(HomeActivity.this, R.color.colorPrimary));
         }
     }
 

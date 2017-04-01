@@ -206,7 +206,7 @@ public class TrekDetailActivity extends AppCompatActivity implements RandomCallb
     }
 
     @Override
-    public void randomeMethod(Object[] data) {
+    public void randomMethod(Object[] data) {
         String url = (String) data[0];
         loadImage(url);
     }

@@ -85,7 +85,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             notifyItemChanged(selectedPos);
             Object[] data = new Object[1];
             data[0] = imageURLList.get(pos).getUrl();
-            randomCallback.randomeMethod(data);
+            randomCallback.randomMethod(data);
         }
     }
 
